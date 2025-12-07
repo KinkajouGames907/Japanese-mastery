@@ -402,7 +402,6 @@ export const KanjiStudy: React.FC<KanjiStudyProps> = ({ onBack }) => {
         {/* Flashcard */}
         <div className="flex flex-col items-center">
           <motion.div
-            <motion.div
             key={currentIndex}
             initial={{ rotateY: 0 }}
             animate={{ rotateY: showDetails ? 180 : 0 }}
