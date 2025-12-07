@@ -1,4 +1,4 @@
-import { Home, BookOpen, Languages, Trophy, Settings, Tv } from 'lucide-react';
+import { Home, BookOpen, Languages, Trophy, Settings } from 'lucide-react';
 
 interface NavigationProps {
   currentPage: string;
@@ -9,7 +9,7 @@ export const Navigation: React.FC<NavigationProps> = ({ currentPage, onNavigate 
   const navItems = [
     { id: 'home', icon: Home, label: 'Home' },
     { id: 'lessons', icon: BookOpen, label: 'Learn' },
-    { id: 'livetv', icon: Tv, label: 'Live' },
+    { id: 'vocabulary', icon: Languages, label: 'Words' },
     { id: 'achievements', icon: Trophy, label: 'Awards' },
     { id: 'settings', icon: Settings, label: 'Settings' }
   ];
@@ -26,8 +26,8 @@ export const Navigation: React.FC<NavigationProps> = ({ currentPage, onNavigate 
               key={item.id}
               onClick={() => onNavigate(item.id)}
               className={`flex flex-col items-center py-2 px-4 rounded-xl transition-all ${isActive
-                  ? 'bg-white/10 text-white'
-                  : 'text-white/40 hover:text-white/60'
+                ? 'bg-white/10 text-white'
+                : 'text-white/40 hover:text-white/60'
                 }`}
             >
               <Icon className="w-6 h-6" />

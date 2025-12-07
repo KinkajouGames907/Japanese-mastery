@@ -13,12 +13,11 @@ import { Settings } from './components/Settings';
 import { Navigation } from './components/Navigation';
 import { LevelUpModal } from './components/LevelUpModal';
 import { AchievementModal } from './components/AchievementModal';
-import { LiveTV } from './components/LiveTV';
 import { lessons } from './data/lessons';
 import { Lesson } from './types';
 import './index.css';
 
-type Page = 'assessment' | 'home' | 'lessons' | 'lesson' | 'vocabulary' | 'kanji' | 'review' | 'achievements' | 'settings' | 'livetv';
+type Page = 'assessment' | 'home' | 'lessons' | 'lesson' | 'vocabulary' | 'kanji' | 'review' | 'achievements' | 'settings';
 
 function App() {
   const { progress, initProgress } = useStore();
@@ -136,14 +135,10 @@ function App() {
             onBack={() => setCurrentPage('home')}
           />
         )}
-
-        {currentPage === 'livetv' && (
-          <LiveTV key="livetv" />
-        )}
       </AnimatePresence>
 
       {/* Bottom Navigation - show on main pages */}
-      {['home', 'lessons', 'vocabulary', 'achievements', 'settings', 'livetv'].includes(currentPage) && (
+      {['home', 'lessons', 'vocabulary', 'achievements', 'settings'].includes(currentPage) && (
         <Navigation currentPage={currentPage} onNavigate={handleNavigate} />
       )}
 
