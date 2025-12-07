@@ -230,7 +230,21 @@ export const LessonView: React.FC<LessonViewProps> = ({ lesson, onBack, onComple
       case 'vocabulary':
         const words = currentContent.data.words
           ? currentContent.data.words.map((id: number) => vocabulary.find(w => w.id === id)).filter(Boolean)
-          : currentContent.data.custom || [];
+          : currentContent.data.slangIds
+            ? currentContent.data.slangIds.map((id: number) => {
+              const slang = slangPhrases.find(s => s.id === id);
+              if (!slang) return null;
+              return {
+                ...slang,
+                japanese: slang.phrase,
+                hiragana: slang.reading,
+                english: slang.meaning,
+                slangNote: slang.formality === 'slang' ? 'Slang' : 'Casual',
+                exampleSentence: slang.example,
+                exampleTranslation: slang.exampleTranslation
+              };
+            }).filter(Boolean)
+            : currentContent.data.custom || [];
 
         return (
           <motion.div
