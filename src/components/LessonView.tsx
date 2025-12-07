@@ -24,6 +24,7 @@ export const LessonView: React.FC<LessonViewProps> = ({ lesson, onBack, onComple
   const [matchingLeft, setMatchingLeft] = useState<{ id: number, text: string, matched: boolean }[]>([]);
   const [matchingRight, setMatchingRight] = useState<{ id: number, text: string, matched: boolean }[]>([]);
   const [selectedMatch, setSelectedMatch] = useState<{ side: 'left' | 'right', id: number } | null>(null);
+  const completedRef = React.useRef(false); // Ref to track if completion logic has run
 
   const { addXp, completeLesson, learnWord, learnKanji, updateStreak } = useStore();
 
@@ -40,6 +41,25 @@ export const LessonView: React.FC<LessonViewProps> = ({ lesson, onBack, onComple
       setSelectedMatch(null);
     }
   }, [quizIndex, lesson.quiz]);
+
+  // Handle lesson completion effects
+  useEffect(() => {
+    if (stage === 'complete' && !completedRef.current) {
+      completedRef.current = true;
+
+      const score = Math.round((correctAnswers / lesson.quiz.length) * 100);
+
+      // Calculate XP: Base reward + points from matching + points from standard quizzes
+      // Note: totalPoints tracks points from ALL quizzes (both simple and matching) if they update it correctly.
+      // handleAnswer updates totalPoints. handleMatchClick updates totalPoints. 
+      // So totalPoints should be correct.
+      const xpEarned = lesson.xpReward + totalPoints;
+
+      addXp(xpEarned);
+      completeLesson(lesson.id, score);
+      updateStreak();
+    }
+  }, [stage, correctAnswers, lesson.quiz.length, lesson.xpReward, totalPoints, lesson.id, addXp, completeLesson, updateStreak]);
 
   const handleNextContent = () => {
     // Track learned items
@@ -162,15 +182,6 @@ export const LessonView: React.FC<LessonViewProps> = ({ lesson, onBack, onComple
               setSelectedAnswer(null);
               setShowFeedback(false);
             } else {
-              // Trigger completion
-              const finalCorrect = correctAnswers + 1;
-              const score = Math.round(finalCorrect / lesson.quiz.length * 100);
-              const xpEarned = lesson.xpReward + totalPoints + currentQuiz.points;
-
-              addXp(xpEarned);
-              completeLesson(lesson.id, score);
-              updateStreak();
-
               setStage('complete');
             }
           }, 1500);
