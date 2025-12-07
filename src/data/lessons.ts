@@ -276,6 +276,15 @@ export const lessons: Lesson[] = [
         correctAnswer: '火',
         explanation: '火 (hi/ka) means fire. 火曜日 = Tuesday',
         points: 10
+      },
+      {
+        id: 2,
+        type: 'matching',
+        question: 'Match the kanji to its meaning',
+        options: ['日', '月', '木', '土'],
+        correctAnswer: ['Sun', 'Moon', 'Tree', 'Earth'],
+        explanation: '日=Sun, 月=Moon, 木=Tree, 土=Earth/Soil',
+        points: 20
       }
     ],
     xpReward: 60
