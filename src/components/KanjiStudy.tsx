@@ -402,46 +402,51 @@ export const KanjiStudy: React.FC<KanjiStudyProps> = ({ onBack }) => {
         {/* Flashcard */}
         <div className="flex flex-col items-center">
           <motion.div
+            <motion.div
             key={currentIndex}
+            initial={{ rotateY: 0 }}
+            animate={{ rotateY: showDetails ? 180 : 0 }}
             onClick={() => setShowDetails(!showDetails)}
-            className="w-full max-w-sm aspect-square cursor-pointer"
-            style={{ perspective: '1000px' }}
+            className="w-full max-w-sm aspect-square cursor-pointer active:scale-95 transition-transform duration-200"
+            style={{
+              perspective: '1000px',
+              transformStyle: 'preserve-3d'
+            }}
           >
-            <AnimatePresence mode="wait">
-              {!showDetails ? (
-                <motion.div
-                  key="front"
-                  initial={{ rotateY: 180 }}
-                  animate={{ rotateY: 0 }}
-                  exit={{ rotateY: -180 }}
-                  className="w-full h-full bg-gradient-to-br from-indigo-500 to-purple-600 rounded-3xl flex flex-col items-center justify-center"
-                >
-                  <span className="text-8xl font-bold text-white">{currentKanji.character}</span>
-                  <p className="text-white/60 mt-4">Tap to reveal</p>
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="back"
-                  initial={{ rotateY: -180 }}
-                  animate={{ rotateY: 0 }}
-                  exit={{ rotateY: 180 }}
-                  className="w-full h-full bg-gradient-to-br from-pink-500 to-orange-500 rounded-3xl p-6 flex flex-col items-center justify-center"
-                >
-                  <p className="text-2xl font-bold text-white mb-4">{currentKanji.meaning.join(', ')}</p>
-                  <div className="grid grid-cols-2 gap-4 w-full text-center">
-                    <div>
-                      <p className="text-white/60 text-sm">On</p>
-                      <p className="text-white">{currentKanji.onyomi.join(', ') || '—'}</p>
-                    </div>
-                    <div>
-                      <p className="text-white/60 text-sm">Kun</p>
-                      <p className="text-white">{currentKanji.kunyomi.join(', ') || '—'}</p>
-                    </div>
-                  </div>
-                  <p className="text-white/80 text-sm mt-4 text-center">💡 {currentKanji.mnemonics}</p>
-                </motion.div>
-              )}
-            </AnimatePresence>
+            {/* Front */}
+            <div
+              className="absolute inset-0 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-3xl flex flex-col items-center justify-center backface-hidden"
+              style={{
+                backfaceVisibility: 'hidden',
+                WebkitBackfaceVisibility: 'hidden'
+              }}
+            >
+              <span className="text-8xl font-bold text-white">{currentKanji.character}</span>
+              <p className="text-white/60 mt-4">Tap to reveal</p>
+            </div>
+
+            {/* Back */}
+            <div
+              className="absolute inset-0 bg-gradient-to-br from-pink-500 to-orange-500 rounded-3xl p-6 flex flex-col items-center justify-center backface-hidden"
+              style={{
+                transform: 'rotateY(180deg)',
+                backfaceVisibility: 'hidden',
+                WebkitBackfaceVisibility: 'hidden'
+              }}
+            >
+              <p className="text-2xl font-bold text-white mb-4">{currentKanji.meaning.join(', ')}</p>
+              <div className="grid grid-cols-2 gap-4 w-full text-center">
+                <div>
+                  <p className="text-white/60 text-sm">On</p>
+                  <p className="text-white">{currentKanji.onyomi.join(', ') || '—'}</p>
+                </div>
+                <div>
+                  <p className="text-white/60 text-sm">Kun</p>
+                  <p className="text-white">{currentKanji.kunyomi.join(', ') || '—'}</p>
+                </div>
+              </div>
+              <p className="text-white/80 text-sm mt-4 text-center">💡 {currentKanji.mnemonics}</p>
+            </div>
           </motion.div>
 
           {showDetails && (
@@ -517,10 +522,10 @@ export const KanjiStudy: React.FC<KanjiStudyProps> = ({ onBack }) => {
                 whileHover={!showFeedback ? { scale: 1.02 } : {}}
                 whileTap={!showFeedback ? { scale: 0.98 } : {}}
                 className={`w-full p-4 rounded-xl text-left font-medium transition-all flex items-center justify-between ${showCorrect
-                    ? 'bg-green-500/30 border-2 border-green-400'
-                    : showWrong
-                      ? 'bg-red-500/30 border-2 border-red-400'
-                      : 'bg-white/10 border-2 border-transparent hover:bg-white/20'
+                  ? 'bg-green-500/30 border-2 border-green-400'
+                  : showWrong
+                    ? 'bg-red-500/30 border-2 border-red-400'
+                    : 'bg-white/10 border-2 border-transparent hover:bg-white/20'
                   }`}
               >
                 <span className="text-white">{option}</span>
