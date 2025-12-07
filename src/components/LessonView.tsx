@@ -271,8 +271,8 @@ export const LessonView: React.FC<LessonViewProps> = ({ lesson, onBack, onComple
                 <div className="flex items-center justify-between mb-2">
                   <div>
                     <span className="text-2xl font-bold text-white">{word.japanese}</span>
-                    {word.hiragana && (
-                      <span className="text-white/60 ml-2">({word.hiragana})</span>
+                    {word.hiragana || word.reading && (
+                      <span className="text-white/60 ml-2">({word.hiragana || word.reading})</span>
                     )}
                   </div>
                   <button className="p-2 bg-white/10 rounded-full hover:bg-white/20">
@@ -477,11 +477,11 @@ export const LessonView: React.FC<LessonViewProps> = ({ lesson, onBack, onComple
           </div>
         )}
 
-        {currentQuiz.type === 'typing' && (
+        {(currentQuiz.type === 'typing' || currentQuiz.type === 'fill_blank') && (
           <div className="space-y-3">
             <input
               type="text"
-              placeholder="Type your answer..."
+              placeholder={currentQuiz.type === 'fill_blank' ? "Fill in the blank..." : "Type your answer..."}
               className="w-full p-4 rounded-xl bg-white/10 border-2 border-white/20 text-white placeholder-white/40 focus:border-pink-400 focus:outline-none"
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
