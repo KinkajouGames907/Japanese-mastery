@@ -405,6 +405,7 @@ export const KanjiStudy: React.FC<KanjiStudyProps> = ({ onBack }) => {
             key={currentIndex}
             onClick={() => setShowDetails(!showDetails)}
             className="w-full max-w-sm aspect-square cursor-pointer"
+            style={{ perspective: '1000px' }}
           >
             <AnimatePresence mode="wait">
               {!showDetails ? (
@@ -515,13 +516,12 @@ export const KanjiStudy: React.FC<KanjiStudyProps> = ({ onBack }) => {
                 disabled={showFeedback}
                 whileHover={!showFeedback ? { scale: 1.02 } : {}}
                 whileTap={!showFeedback ? { scale: 0.98 } : {}}
-                className={`w-full p-4 rounded-xl text-left font-medium transition-all flex items-center justify-between ${
-                  showCorrect
+                className={`w-full p-4 rounded-xl text-left font-medium transition-all flex items-center justify-between ${showCorrect
                     ? 'bg-green-500/30 border-2 border-green-400'
                     : showWrong
-                    ? 'bg-red-500/30 border-2 border-red-400'
-                    : 'bg-white/10 border-2 border-transparent hover:bg-white/20'
-                }`}
+                      ? 'bg-red-500/30 border-2 border-red-400'
+                      : 'bg-white/10 border-2 border-transparent hover:bg-white/20'
+                  }`}
               >
                 <span className="text-white">{option}</span>
                 {showCorrect && <Check className="w-5 h-5 text-green-400" />}

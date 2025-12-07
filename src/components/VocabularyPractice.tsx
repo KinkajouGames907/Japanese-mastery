@@ -73,7 +73,7 @@ export const VocabularyPractice: React.FC<VocabularyPracticeProps> = ({ onBack }
 
   const handleTypingSubmit = () => {
     const correct = typedAnswer.toLowerCase().trim() === currentWord.hiragana ||
-                    typedAnswer.toLowerCase().trim() === currentWord.romaji;
+      typedAnswer.toLowerCase().trim() === currentWord.romaji;
 
     setShowFeedback(true);
 
@@ -285,9 +285,8 @@ export const VocabularyPractice: React.FC<VocabularyPracticeProps> = ({ onBack }
             <div className="relative w-full h-full">
               {/* Front */}
               <div
-                className={`absolute inset-0 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-3xl p-6 flex flex-col items-center justify-center backface-hidden ${
-                  showAnswer ? 'invisible' : ''
-                }`}
+                className="absolute inset-0 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-3xl p-6 flex flex-col items-center justify-center"
+                style={{ backfaceVisibility: 'hidden' }}
               >
                 <p className="text-5xl font-bold text-white mb-4">{currentWord.japanese}</p>
                 <p className="text-xl text-white/70">{currentWord.hiragana}</p>
@@ -296,9 +295,7 @@ export const VocabularyPractice: React.FC<VocabularyPracticeProps> = ({ onBack }
 
               {/* Back */}
               <div
-                className={`absolute inset-0 bg-gradient-to-br from-pink-500 to-orange-500 rounded-3xl p-6 flex flex-col items-center justify-center ${
-                  showAnswer ? '' : 'invisible'
-                }`}
+                className="absolute inset-0 bg-gradient-to-br from-pink-500 to-orange-500 rounded-3xl p-6 flex flex-col items-center justify-center"
                 style={{ transform: 'rotateY(180deg)', backfaceVisibility: 'hidden' }}
               >
                 <p className="text-3xl font-bold text-white mb-4">{currentWord.english}</p>
@@ -358,13 +355,12 @@ export const VocabularyPractice: React.FC<VocabularyPracticeProps> = ({ onBack }
                   disabled={showFeedback}
                   whileHover={!showFeedback ? { scale: 1.02 } : {}}
                   whileTap={!showFeedback ? { scale: 0.98 } : {}}
-                  className={`w-full p-4 rounded-xl text-left font-medium transition-all flex items-center justify-between ${
-                    showCorrect
+                  className={`w-full p-4 rounded-xl text-left font-medium transition-all flex items-center justify-between ${showCorrect
                       ? 'bg-green-500/30 border-2 border-green-400'
                       : showWrong
-                      ? 'bg-red-500/30 border-2 border-red-400'
-                      : 'bg-white/10 border-2 border-transparent hover:bg-white/20'
-                  }`}
+                        ? 'bg-red-500/30 border-2 border-red-400'
+                        : 'bg-white/10 border-2 border-transparent hover:bg-white/20'
+                    }`}
                 >
                   <span className="text-white">{option}</span>
                   {showCorrect && <Check className="w-5 h-5 text-green-400" />}
@@ -394,13 +390,12 @@ export const VocabularyPractice: React.FC<VocabularyPracticeProps> = ({ onBack }
               onKeyDown={(e) => e.key === 'Enter' && !showFeedback && handleTypingSubmit()}
               placeholder="Type in hiragana or romaji..."
               disabled={showFeedback}
-              className={`w-full p-4 rounded-xl text-center text-xl bg-white/10 border-2 text-white placeholder-white/40 focus:outline-none ${
-                showFeedback
+              className={`w-full p-4 rounded-xl text-center text-xl bg-white/10 border-2 text-white placeholder-white/40 focus:outline-none ${showFeedback
                   ? typedAnswer.toLowerCase().trim() === currentWord.hiragana || typedAnswer.toLowerCase().trim() === currentWord.romaji
                     ? 'border-green-400'
                     : 'border-red-400'
                   : 'border-white/20 focus:border-pink-400'
-              }`}
+                }`}
             />
 
             {showFeedback && (
